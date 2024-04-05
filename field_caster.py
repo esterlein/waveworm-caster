@@ -10,7 +10,7 @@ class MtxType(Enum):
     
 class FieldCaster:
     
-    m_simul_matrix = [[]]
+    m_sim_mtx = [[]]
     
     m_size = 20
     m_mu = 10
@@ -28,12 +28,12 @@ class FieldCaster:
                 self.init_mtx_gaussian_offset()
     
     def init_mtx_gaussian_normal(self):
-        m_simul_matrix = np.random.normal(self.m_mu, self.m_sigma, (self.m_size, self.m_size))
+        self.m_sim_mtx = np.random.normal(self.m_mu, self.m_sigma, (self.m_size, self.m_size))
         return
     
     def init_mtx_gaussian_offset(self):
-        m_simul_matrix = np.random.normal(self.m_mu, self.m_sigma, (self.m_size, self.m_size))
+        self.m_sim_mtx = np.random.normal(self.m_mu, self.m_sigma, (self.m_size, self.m_size))
         for col in range(self.m_size):
             for row in range(self.m_size):
-                m_simul_matrix[row][col] = math.trunc(m_simul_matrix[row][col]) + self.m_mu
+                m_sim_mtx[row][col] = math.trunc(m_sim_mtx[row][col]) + self.m_mu
         return
