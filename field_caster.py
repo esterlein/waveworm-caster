@@ -1,6 +1,7 @@
 import math
 import numpy as np
-
+    
+    
 class FieldCaster:
     
     m_simul_matrix = [[]]
@@ -8,6 +9,11 @@ class FieldCaster:
     m_size = 20
     m_mu = 10
     m_sigma = 2
+    
+    def __init__(self, size, mu, sigma):
+        self.m_size = size
+        self.m_mu = mu
+        self.m_sigma = sigma
     
     def init_mtx_gaussian_normal(self):
         m_simul_matrix = np.random.normal(self.m_mu, self.m_sigma, (self.m_size, self.m_size))
