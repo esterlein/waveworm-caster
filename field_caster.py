@@ -35,5 +35,5 @@ class FieldCaster:
         self.m_sim_mtx = np.random.normal(self.m_mu, self.m_sigma, (self.m_size, self.m_size))
         for col in range(self.m_size):
             for row in range(self.m_size):
-                m_sim_mtx[row][col] = math.trunc(m_sim_mtx[row][col]) + self.m_mu
+                self.m_sim_mtx[row][col] = math.trunc(self.m_sim_mtx[row][col]) + self.m_mu
         return
