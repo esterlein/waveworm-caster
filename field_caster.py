@@ -1,4 +1,5 @@
 import math
+import random
 import numpy as np
 
 from enum import Enum
@@ -32,6 +33,8 @@ class FieldCaster:
                 self.init_mtx_gaussian_offset()
             case MtxType.RAD_GRAD_CLEAN:
                 self.init_radial_gradient_clean()
+            case MtxType.RAD_GRAD_NOISE:
+                self.init_radial_gradient_noise()
     
     def init_gaussian_normal(self):
         self.m_sim_mtx = np.random.normal(self.m_mu, self.m_sigma, (self.m_size, self.m_size))
@@ -54,4 +57,13 @@ class FieldCaster:
             for y in range(self.m_size):
                 self.m_sim_mtx[x][y] = math.sqrt(pow(abs(center_x - x), 2) + pow(abs(center_y - y), 2))
         return
+    
+    def init_radial_gradient_noise(self):
+        self.init_radial_gradient_clean()
+        
+        for x in range(self.m_size):
+            for y in range(self.m_size):
+                self.m_sim_mtx[x][y] += random.random()
+        
+        
                 
