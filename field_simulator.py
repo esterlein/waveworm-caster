@@ -12,7 +12,7 @@ class MtxType(Enum):
     RAD_GRAD_NOISE = 4
     
     
-class FieldCaster:
+class FieldSimulator:
     
     m_sim_mtx = [[]]
     
@@ -20,6 +20,7 @@ class FieldCaster:
     
     m_mu = 10
     m_sigma = 2
+    
     
     def __init__(self, size, mu, sigma, type = MtxType.GAUSS_NORM):
         self.m_size = size
@@ -36,16 +37,17 @@ class FieldCaster:
             case MtxType.RAD_GRAD_NOISE:
                 self.init_radial_gradient_noise()
     
+    
     def init_gaussian_normal(self):
         self.m_sim_mtx = np.random.normal(self.m_mu, self.m_sigma, (self.m_size, self.m_size))
-        return
+    
     
     def init_gaussian_offset(self):
         self.m_sim_mtx = np.random.normal(self.m_mu, self.m_sigma, (self.m_size, self.m_size))
         for col in range(self.m_size):
             for row in range(self.m_size):
                 self.m_sim_mtx[row][col] = math.trunc(self.m_sim_mtx[row][col]) + self.m_mu
-        return
+    
     
     def init_radial_gradient_clean(self):
         self.m_sim_mtx = np.zeros((self.m_size, self.m_size), np.float64)
@@ -56,7 +58,7 @@ class FieldCaster:
         for x in range(self.m_size):
             for y in range(self.m_size):
                 self.m_sim_mtx[x][y] = math.sqrt(pow(abs(center_x - x), 2) + pow(abs(center_y - y), 2))
-        return
+    
     
     def init_radial_gradient_noise(self):
         self.init_radial_gradient_clean()

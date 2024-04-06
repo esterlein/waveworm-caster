@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pylab as plt
 
-from field_caster import FieldCaster
-from field_caster import MtxType as MT
+from field_simulator import FieldSimulator
+from field_simulator import MtxType as MT
 
 
-mtx = FieldCaster(20, 10, 2, MT.RAD_GRAD_NOISE)
+mtx = FieldSimulator(20, 10, 2, MT.RAD_GRAD_NOISE)
 
 for row in range(mtx.m_size):
     for col in range(mtx.m_size):
