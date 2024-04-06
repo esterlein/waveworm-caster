@@ -15,6 +15,6 @@ figure = plt.figure()
 axis = figure.add_subplot(1, 1, 1)
 axis.set_aspect('equal')
 
-plt.imshow(mtx.m_sim_mtx, interpolation = 'nearest', cmap = plt.cm.ocean)
+plt.imshow(mtx.m_sim_mtx, interpolation = 'nearest', cmap = plt.cm.plasma)
 plt.colorbar()
 plt.show()
