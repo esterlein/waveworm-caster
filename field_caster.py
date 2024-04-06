@@ -53,4 +53,5 @@ class FieldCaster:
         for x in range(self.m_size):
             for y in range(self.m_size):
                 self.m_sim_mtx[x][y] = math.sqrt(pow(abs(center_x - x), 2) + pow(abs(center_y - y), 2))
+        return
                 
