@@ -30,23 +30,23 @@ class FieldSimulator:
         
         match type:
             case MtxType.GAUSS_NORM:
-                self.get_mtx_gaussian_normal(self.m_sim_mtx)
+                self.m_sim_mtx = FieldSimulator.get_mtx_gaussian_normal(size)
             case MtxType.GAUSS_OFFS:
-                self.get_mtx_gaussian_offset(self.m_sim_mtx)
+                self.m_sim_mtx = FieldSimulator.get_mtx_gaussian_offset(size)
             case MtxType.RAD_GRAD_CLEAN:
-                self.get_radial_gradient_clean(self.m_sim_mtx)
+                self.m_sim_mtx = FieldSimulator.get_radial_gradient_clean(size)
             case MtxType.RAD_GRAD_NOISE:
-                self.get_radial_gradient_noise(self.m_sim_mtx)
+                self.m_sim_mtx = FieldSimulator.get_radial_gradient_noise(size)
     
     
     @staticmethod
-    def get_gaussian_normal(self, size : int, mu : float, sigma : float) -> List[List[float]]:
+    def get_gaussian_normal(size : int, mu : float, sigma : float) -> List[List[float]]:
         mtx = np.random.normal(mu, sigma, (size, size))
         return mtx
     
     
     @staticmethod
-    def get_gaussian_offset(self, size : int, mu : float, sigma : float) -> List[List[float]]:
+    def get_gaussian_offset(size : int, mu : float, sigma : float) -> List[List[float]]:
         mtx = np.random.normal(mu, sigma, (size, size))
         
         for col in range(size):
@@ -57,7 +57,7 @@ class FieldSimulator:
     
     
     @staticmethod
-    def get_radial_gradient_clean(self, size : int) -> List[List[float]]:
+    def get_radial_gradient_clean(size : int) -> List[List[float]]:
         mtx = np.zeros((size, size), np.float64)
         
         center_x = size / 2
@@ -65,14 +65,14 @@ class FieldSimulator:
         
         for x in range(size):
             for y in range(size):
-                mtx[x][y] = math.sqrt(pow(abs(center_x - x), 2) + pow(abs(center_y - y), 2))
+                mtx[x][y] = 100 / math.sqrt(pow(abs(center_x - x), 2) + pow(abs(center_y - y), 2))
         
         return mtx
     
     
     @staticmethod
-    def get_radial_gradient_noise(self, size : int) -> List[List[float]]:
-        mtx = self.get_radial_gradient_clean(size)
+    def get_radial_gradient_noise(size : int) -> List[List[float]]:
+        mtx = FieldSimulator.get_radial_gradient_clean(size)
         
         for x in range(size):
             for y in range(size):
