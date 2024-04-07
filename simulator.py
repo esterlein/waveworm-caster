@@ -3,6 +3,7 @@ import random
 import numpy as np
 
 from enum import Enum
+from typing import List
 
 
 class MtxType(Enum):
@@ -14,12 +15,12 @@ class MtxType(Enum):
     
 class FieldSimulator:
     
-    m_sim_mtx = [[]]
+    m_sim_mtx = List[List[float]]
     
-    m_size = 20
+    m_size : int = 20
     
-    m_mu = 10
-    m_sigma = 2
+    m_mu : float = 10.
+    m_sigma : float = 2.
     
     
     def __init__(self, size, mu, sigma, type = MtxType.GAUSS_NORM):
@@ -29,43 +30,51 @@ class FieldSimulator:
         
         match type:
             case MtxType.GAUSS_NORM:
-                self.init_mtx_gaussian_normal()
+                self.get_mtx_gaussian_normal(self.m_sim_mtx)
             case MtxType.GAUSS_OFFS:
-                self.init_mtx_gaussian_offset()
+                self.get_mtx_gaussian_offset(self.m_sim_mtx)
             case MtxType.RAD_GRAD_CLEAN:
-                self.init_radial_gradient_clean()
+                self.get_radial_gradient_clean(self.m_sim_mtx)
             case MtxType.RAD_GRAD_NOISE:
-                self.init_radial_gradient_noise()
+                self.get_radial_gradient_noise(self.m_sim_mtx)
     
     
-    def init_gaussian_normal(self):
-        self.m_sim_mtx = np.random.normal(self.m_mu, self.m_sigma, (self.m_size, self.m_size))
+    def get_gaussian_normal(self, size : int, mu : float, sigma : float) -> List[List[float]]:
+        mtx = np.random.normal(mu, sigma, (size, size))
+        return mtx
     
     
-    def init_gaussian_offset(self):
-        self.m_sim_mtx = np.random.normal(self.m_mu, self.m_sigma, (self.m_size, self.m_size))
-        for col in range(self.m_size):
-            for row in range(self.m_size):
-                self.m_sim_mtx[row][col] = math.trunc(self.m_sim_mtx[row][col]) + self.m_mu
-    
-    
-    def init_radial_gradient_clean(self):
-        self.m_sim_mtx = np.zeros((self.m_size, self.m_size), np.float64)
+    def get_gaussian_offset(self, size : int, mu : float, sigma : float) -> List[List[float]]:
+        mtx = np.random.normal(mu, sigma, (size, size))
         
-        center_x = self.m_size / 2
-        center_y = self.m_size / 2
+        for col in range(size):
+            for row in range(size):
+                mtx[row][col] = math.trunc(mtx[row][col]) + mu
         
-        for x in range(self.m_size):
-            for y in range(self.m_size):
-                self.m_sim_mtx[x][y] = math.sqrt(pow(abs(center_x - x), 2) + pow(abs(center_y - y), 2))
+        return mtx
     
     
-    def init_radial_gradient_noise(self):
-        self.init_radial_gradient_clean()
+    def get_radial_gradient_clean(self, size : int) -> List[List[float]]:
+        mtx = np.zeros((size, size), np.float64)
         
-        for x in range(self.m_size):
-            for y in range(self.m_size):
-                self.m_sim_mtx[x][y] += random.random()
+        center_x = size / 2
+        center_y = center_x
+        
+        for x in range(size):
+            for y in range(size):
+                mtx[x][y] = math.sqrt(pow(abs(center_x - x), 2) + pow(abs(center_y - y), 2))
+        
+        return mtx
+    
+    
+    def get_radial_gradient_noise(self, size : int) -> List[List[float]]:
+        mtx = self.get_radial_gradient_clean(size)
+        
+        for x in range(size):
+            for y in range(size):
+                mtx[x][y] += random.random()
+        
+        return mtx
         
         
                 
