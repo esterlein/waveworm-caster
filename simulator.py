@@ -39,11 +39,13 @@ class FieldSimulator:
                 self.get_radial_gradient_noise(self.m_sim_mtx)
     
     
+    @staticmethod
     def get_gaussian_normal(self, size : int, mu : float, sigma : float) -> List[List[float]]:
         mtx = np.random.normal(mu, sigma, (size, size))
         return mtx
     
     
+    @staticmethod
     def get_gaussian_offset(self, size : int, mu : float, sigma : float) -> List[List[float]]:
         mtx = np.random.normal(mu, sigma, (size, size))
         
@@ -54,6 +56,7 @@ class FieldSimulator:
         return mtx
     
     
+    @staticmethod
     def get_radial_gradient_clean(self, size : int) -> List[List[float]]:
         mtx = np.zeros((size, size), np.float64)
         
@@ -67,6 +70,7 @@ class FieldSimulator:
         return mtx
     
     
+    @staticmethod
     def get_radial_gradient_noise(self, size : int) -> List[List[float]]:
         mtx = self.get_radial_gradient_clean(size)
         
