@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pylab as plt
 
-from field_simulator import FieldSimulator
-from field_simulator import MtxType as MT
+from simulator import FieldSimulator
+from simulator import MtxType as MT
 
 
 mtx = FieldSimulator(20, 10, 2, MT.RAD_GRAD_NOISE)
