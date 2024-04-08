@@ -15,8 +15,9 @@ sigma : float = 2.
 strength : int = 12
 noise : int = 2
 density : int = 20
+sparsity : int = 1
 
-simulator = Simulator(size, mu, sigma, strength, noise, density, MT.RAD_GRAD_NOISE)
+simulator = Simulator(size, mu, sigma, strength, noise, density, sparsity, MT.RAD_GRAD_NOISE)
 
 field : List[List[int]] = simulator.get_field()
 probe : List[List[int]] = simulator.get_probe()

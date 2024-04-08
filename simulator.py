@@ -28,10 +28,11 @@ class Simulator:
     m_noise : int = 2
     
     m_probe_density : int = 10
+    m_probe_sparsity : int = 1
     
     
     def __init__(self, size : int, mu : float, sigma : float,
-                 strength : int = 10, noise : int = 3, density : int = 10,
+                 strength : int = 10, noise : int = 3, density : int = 10, sparsity : int = 1,
                  type = MtxType.GAUSS_NORM):
         
         self.m_size = size
@@ -40,12 +41,13 @@ class Simulator:
         self.m_strength = strength
         self.m_noise = noise
         self.m_probe_density = density
+        self.m_probe_sparsity = sparsity
         
         match type:
             case MtxType.GAUSS_NORM:
-                self.m_mtx_field = Simulator.get_mtx_gaussian_normal(size, strength)
+                self.m_mtx_field = Simulator.get_gaussian_normal(size, strength)
             case MtxType.GAUSS_OFFS:
-                self.m_mtx_field = Simulator.get_mtx_gaussian_offset(size, strength)
+                self.m_mtx_field = Simulator.get_gaussian_offset(size, strength)
             case MtxType.RAD_GRAD_CLEAN:
                 self.m_mtx_field = Simulator.get_radial_gradient_clean(size, strength)
             case MtxType.RAD_GRAD_NOISE:
@@ -64,11 +66,10 @@ class Simulator:
             col = int(index % size)
             
             memo = set()
-            if self.__backtrack(row, col, 1, memo) == False:
+            if self.__backtrack(row, col, sparsity, memo) == False:
                 continue
             
             self.m_mtx_probe[row][col] = self.m_mtx_field[row][col]
-            
             p_num += 1
     
     
