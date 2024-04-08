@@ -6,6 +6,8 @@ from typing import List
 from simulator import FieldSimulator
 from simulator import MtxType as MT
 
+from interpolator import FieldCaster
+
 
 size : int = 20
 mu : float = 10.
@@ -19,18 +21,25 @@ simulator = FieldSimulator(size, mu, sigma, strength, noise, density, MT.RAD_GRA
 field : List[List[float]] = simulator.get_field()
 probe : List[List[float]] = simulator.get_probe()
 
+interpolator = FieldCaster(probe)
+inter_mtx : List[List[float]] = interpolator.get_interpolated()
+
 for row in range(size):
     for col in range(size):
         print(field[row][col])
         
 figure = plt.figure()
 
-axes = figure.add_subplot(1, 2, 1)
+axes = figure.add_subplot(1, 3, 1)
 axes.set_aspect('equal')
 plt.imshow(field, interpolation = 'nearest', cmap = plt.cm.plasma)
 
-axes = figure.add_subplot(1, 2, 2)
+axes = figure.add_subplot(1, 3, 2)
 axes.set_aspect('equal')
 plt.imshow(probe, interpolation = 'nearest', cmap = plt.cm.plasma)
+
+axes = figure.add_subplot(1, 3, 3)
+axes.set_aspect('equal')
+plt.imshow(inter_mtx, interpolation = 'nearest', cmap = plt.cm.plasma)
 
 plt.show()
