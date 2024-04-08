@@ -56,11 +56,13 @@ class FieldSimulator:
         
         self.m_mtx_probe = [[np.nan for x in range(size)] for y in range(size)]
         
-        for i in range(probes):
+        for p in range(probes):
             index = random.randrange(size_total)
-            x = int(index / size)
-            y = int(index % size)
-            self.m_mtx_probe[x][y] = self.m_mtx_field[x][y]
+            
+            row = int(index / size)
+            col = int(index % size)
+            
+            self.m_mtx_probe[row][col] = self.m_mtx_field[row][col]
             
             
     def get_field(self) -> List[List[float]]:
