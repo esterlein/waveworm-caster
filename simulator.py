@@ -22,22 +22,25 @@ class FieldSimulator:
     m_mu : float = 10.
     m_sigma : float = 2.
     
+    m_strength : int = 100
     
-    def __init__(self, size, mu, sigma, type = MtxType.GAUSS_NORM):
+    
+    def __init__(self, size, mu, sigma, strength = 100, type = MtxType.GAUSS_NORM):
         
         self.m_size = size
         self.m_mu = mu
         self.m_sigma = sigma
+        self.m_strength = strength
         
         match type:
             case MtxType.GAUSS_NORM:
-                self.m_sim_mtx = FieldSimulator.get_mtx_gaussian_normal(size)
+                self.m_sim_mtx = FieldSimulator.get_mtx_gaussian_normal(size, strength)
             case MtxType.GAUSS_OFFS:
-                self.m_sim_mtx = FieldSimulator.get_mtx_gaussian_offset(size)
+                self.m_sim_mtx = FieldSimulator.get_mtx_gaussian_offset(size, strength)
             case MtxType.RAD_GRAD_CLEAN:
-                self.m_sim_mtx = FieldSimulator.get_radial_gradient_clean(size)
+                self.m_sim_mtx = FieldSimulator.get_radial_gradient_clean(size, strength)
             case MtxType.RAD_GRAD_NOISE:
-                self.m_sim_mtx = FieldSimulator.get_radial_gradient_noise(size)
+                self.m_sim_mtx = FieldSimulator.get_radial_gradient_noise(size, strength)
     
     
     @staticmethod
