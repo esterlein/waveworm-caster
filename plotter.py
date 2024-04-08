@@ -3,30 +3,30 @@ import matplotlib.pylab as plt
 
 from typing import List
 
-from simulator import FieldSimulator
+from simulator import Simulator
 from simulator import MtxType as MT
 
-from interpolator import FieldCaster
+from interpolator import Interpolator
 
 
 size : int = 20
 mu : float = 10.
 sigma : float = 2.
-strength : int = 100
-noise : int = 1
-density : int = 7
+strength : int = 12
+noise : int = 3
+density : int = 20
 
-simulator = FieldSimulator(size, mu, sigma, strength, noise, density, MT.RAD_GRAD_NOISE)
+simulator = Simulator(size, mu, sigma, strength, noise, density, MT.RAD_GRAD_NOISE)
 
-field : List[List[float]] = simulator.get_field()
-probe : List[List[float]] = simulator.get_probe()
-
-interpolator = FieldCaster(probe)
-inter_mtx : List[List[float]] = interpolator.get_interpolated()
+field : List[List[int]] = simulator.get_field()
+probe : List[List[int]] = simulator.get_probe()
 
 for row in range(size):
     for col in range(size):
         print(field[row][col])
+
+interpolator = Interpolator(probe)
+inter_mtx : List[List[float]] = interpolator.get_interpolated()
         
 figure = plt.figure()
 
