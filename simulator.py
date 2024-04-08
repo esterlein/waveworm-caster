@@ -52,18 +52,61 @@ class Simulator:
                 self.m_mtx_field = Simulator.get_radial_gradient_noise(size, strength)
         
         size_total = size ** 2
-        probes = int(size_total * density / 100)
+        probes_num = int(size_total * density / 100)
         
-        self.m_mtx_probe = [[float('nan') for x in range(size)] for y in range(size)]
+        self.m_mtx_probe = [[np.nan for x in range(size)] for y in range(size)]
         
-        for p in range(probes):
+        p_num = 0
+        while p_num < probes_num:
             index = random.randrange(size_total)
             
             row = int(index / size)
             col = int(index % size)
             
+            memo = set()
+            if self.__backtrack(row, col, 1, memo) == False:
+                continue
+            
             self.m_mtx_probe[row][col] = self.m_mtx_field[row][col]
             
+            p_num += 1
+    
+    
+    def __backtrack(self, row : int, col : int, depth : int, memo : set) -> bool:
+        
+        if (row, col) in memo:
+            return True
+        
+        if math.isnan(self.m_mtx_probe[row][col]) == False:
+            return False
+        else:
+            memo.add((row, col))
+        
+        if depth == 0:
+            return True
+        
+        result = True
+        
+        if row > 0:
+            result &= self.__backtrack(row - 1, col, depth - 1, memo)
+        if col > 0:
+            result &= self.__backtrack(row, col - 1, depth - 1, memo)
+        if row < self.m_size - 1:
+            result &= self.__backtrack(row + 1, col, depth - 1, memo)
+        if col < self.m_size - 1:
+            result &= self.__backtrack(row, col + 1, depth - 1, memo)
+            
+        if row > 0 and col > 0:
+            result &= self.__backtrack(row - 1, col - 1, depth - 1, memo)
+        if row > 0 and col < self.m_size - 1:
+            result &= self.__backtrack(row - 1, col + 1, depth - 1, memo)
+        if row < self.m_size - 1 and col > 0:
+            result &= self.__backtrack(row + 1, col - 1, depth - 1, memo)
+        if row < self.m_size - 1 and col < self.m_size - 1:
+            result &= self.__backtrack(row + 1, col + 1, depth - 1, memo)
+            
+        return result
+    
             
     def get_field(self) -> List[List[int]]:
         return self.m_mtx_field
