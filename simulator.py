@@ -24,6 +24,7 @@ class FieldSimulator:
     
     
     def __init__(self, size, mu, sigma, type = MtxType.GAUSS_NORM):
+        
         self.m_size = size
         self.m_mu = mu
         self.m_sigma = sigma
@@ -57,7 +58,7 @@ class FieldSimulator:
     
     
     @staticmethod
-    def get_radial_gradient_clean(size : int) -> List[List[float]]:
+    def get_radial_gradient_clean(size : int, strength : int = 100) -> List[List[float]]:
         mtx = np.zeros((size, size), np.float64)
         
         center_x = size / 2
@@ -65,14 +66,14 @@ class FieldSimulator:
         
         for x in range(size):
             for y in range(size):
-                mtx[x][y] = 100 / math.sqrt(pow(abs(center_x - x), 2) + pow(abs(center_y - y), 2))
+                mtx[x][y] = strength - math.sqrt(pow(abs(center_x - x), 2) + pow(abs(center_y - y), 2))
         
         return mtx
     
     
     @staticmethod
-    def get_radial_gradient_noise(size : int) -> List[List[float]]:
-        mtx = FieldSimulator.get_radial_gradient_clean(size)
+    def get_radial_gradient_noise(size : int, strength : int = 100) -> List[List[float]]:
+        mtx = FieldSimulator.get_radial_gradient_clean(size, strength)
         
         for x in range(size):
             for y in range(size):
