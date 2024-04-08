@@ -27,7 +27,7 @@ for row in range(size):
         print(field[row][col])
 
 interpolator = Interpolator(probe)
-inter_mtx : List[List[float]] = interpolator.get_interpolated()
+interpolated : List[List[int]] = interpolator.get_interpolated()
         
 figure = plt.figure()
 
@@ -41,6 +41,6 @@ plt.imshow(probe, interpolation = 'nearest', cmap = plt.cm.plasma)
 
 axes = figure.add_subplot(1, 3, 3)
 axes.set_aspect('equal')
-plt.imshow(inter_mtx, interpolation = 'nearest', cmap = plt.cm.plasma)
+plt.imshow(interpolated, interpolation = 'nearest', cmap = plt.cm.plasma)
 
 plt.show()
