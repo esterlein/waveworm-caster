@@ -30,7 +30,9 @@ class FieldSimulator:
     m_probe_density : int = 10
     
     
-    def __init__(self, size : int, mu : float, sigma : float, strength : int = 100, noise : int = 1, density : int = 10, type = MtxType.GAUSS_NORM):
+    def __init__(self, size : int, mu : float, sigma : float,
+                 strength : int = 100, noise : int = 1, density : int = 10,
+                 type = MtxType.GAUSS_NORM):
         
         self.m_size = size
         self.m_mu = mu
@@ -59,6 +61,14 @@ class FieldSimulator:
             x = int(index / size)
             y = int(index % size)
             self.m_mtx_probe[x][y] = self.m_mtx_field[x][y]
+            
+            
+    def get_field(self) -> List[List[float]]:
+        return self.m_mtx_field
+    
+    
+    def get_probe(self) -> List[List[float]]:
+        return self.m_mtx_probe
             
     
     @staticmethod
@@ -101,6 +111,4 @@ class FieldSimulator:
                 mtx[x][y] += random.random()
         
         return mtx
-        
-        
-                
+    
