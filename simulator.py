@@ -25,7 +25,7 @@ class Simulator:
     m_sigma : float = 2.
     
     m_strength : int = 10
-    m_noise : int = 3
+    m_noise : int = 2
     
     m_probe_density : int = 10
     
@@ -105,12 +105,12 @@ class Simulator:
     
     
     @staticmethod
-    def get_radial_gradient_noise(size : int, strength : int = 10) -> List[List[int]]:
+    def get_radial_gradient_noise(size : int, strength : int = 10, noise : int = 2) -> List[List[int]]:
         mtx = Simulator.get_radial_gradient_clean(size, strength)
         
         for x in range(size):
             for y in range(size):
-                mtx[x][y] += random.randrange(Simulator.m_noise)
+                mtx[x][y] += random.randrange(-noise, noise + 1)
         
         return mtx
     

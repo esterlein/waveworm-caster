@@ -13,7 +13,7 @@ size : int = 20
 mu : float = 10.
 sigma : float = 2.
 strength : int = 12
-noise : int = 3
+noise : int = 2
 density : int = 20
 
 simulator = Simulator(size, mu, sigma, strength, noise, density, MT.RAD_GRAD_NOISE)
