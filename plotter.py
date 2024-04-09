@@ -7,6 +7,7 @@ from simulator import Simulator
 from simulator import MtxType as MT
 
 from interpolator import Interpolator
+from interpolator import InterpolationType as IT
 
 
 size : int = 20
@@ -26,7 +27,7 @@ for row in range(size):
     for col in range(size):
         print(field[row][col])
 
-interpolator = Interpolator(probe)
+interpolator = Interpolator(probe, IT.NUC_NORM_MIN)
 interpolated : List[List[int]] = interpolator.get_interpolated()
         
 figure = plt.figure()
