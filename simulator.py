@@ -52,6 +52,8 @@ class Simulator:
                 self.m_mtx_field = Simulator.get_radial_gradient_clean(size, strength)
             case MtxType.RAD_GRAD_NOISE:
                 self.m_mtx_field = Simulator.get_radial_gradient_noise(size, strength)
+                
+        self.m_mtx_field = Simulator.scalar_offset_normalization(self.m_mtx_field)
         
         size_total = size ** 2
         probes_num = int(size_total * density / 100)
