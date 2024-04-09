@@ -158,3 +158,18 @@ class Simulator:
         
         return mtx
     
+    
+    @staticmethod
+    def scalar_offset_normalization(mtx : List[List[int]]) -> List[List[int]]:
+        
+        min_val = 0
+        for row in range(len(mtx)):
+            for col in range(len(mtx[0])):
+                min_val = min(min_val, mtx[row][col])
+                
+        if min_val < 0:
+            for row in range(len(mtx)):
+                for col in range(len(mtx[0])):
+                    mtx[row][col] += -min_val
+                    
+        return mtx
