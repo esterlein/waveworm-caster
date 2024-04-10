@@ -27,7 +27,7 @@ for row in range(size):
     for col in range(size):
         print(field[row][col])
 
-interpolator = Interpolator(probe, IT.NUC_NORM_MIN)
+interpolator = Interpolator(probe, IT.NNM)
 interpolated : List[List[int]] = interpolator.get_interpolated()
         
 figure = plt.figure()
